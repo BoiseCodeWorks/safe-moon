@@ -1,16 +1,24 @@
 import store from "../store.js";
 
 class GameService {
+  buyUpgrade() {
+    if (store.State.count < store.State.pickaxe.price) {
+      throw new Error("You broke");
+    }
 
-  updateCount(){
-    console.log("DID WE GET HERE?")
-    // throw new Error("YOU SHALL NOT PASS")
-    store.State.count += 1 //TODO: ADD MODS
-    console.log("DID WE GET HERE?")
+    store.State.count -= store.State.pickaxe.price;
+    store.State.pickaxe.quantity++;
+    store.State.pickaxe.price *= 1.25;
   }
 
+  updateCount() {
+    let n = 1;
+    n += store.State.pickaxe.quantity * store.State.pickaxe.multiplier;
+
+    store.State.count += n;
+  }
 }
 
-const GAMESERVICE = new GameService()
+const GAMESERVICE = new GameService();
 
-export default GAMESERVICE
+export default GAMESERVICE;
